@@ -1,0 +1,21 @@
+mat-toolbar{
+    background: #184cdb;
+}
+h1{
+    color: white;
+}
+
+a{
+    color: #184cdb;
+    text-decoration: none;
+}
+
+mat-icon{display: inline-flex;vertical-align: middle;align-items: center; margin-right:5px; color: white;}
+
+.menu-spacer {
+  flex: 1 1 auto;
+}
+
+h1{
+font-family: Helvetica;}
+

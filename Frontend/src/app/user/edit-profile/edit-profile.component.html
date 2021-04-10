@@ -1,0 +1,38 @@
+
+    <mat-card>
+      <mat-card-header>
+        <mat-card-title>Edit Profile</mat-card-title>
+      </mat-card-header>
+  <br>
+      <form class="example-form" *ngIf="userDetails"  [formGroup]="EditForm" (ngSubmit)="onSubmit(EditForm)">
+        <mat-card-content >
+
+
+<mat-form-field field class="example-full-width" color="accent" appearance="outline" ><mat-label>User Id</mat-label>
+    <input matInput type="text" formControlName="userid" [(ngModel)]="userDetails.userid"  name="userid" required placeholder="User ID">
+    <mat-error *ngIf="handleError('userid', 'required')">You must provide a <strong>User Id</strong></mat-error>
+    <mat-error *ngIf="handleError('userid', 'minlength')">Password must have Minimum<strong>4</strong>character</mat-error>
+    <!-- <mat-error *ngIf="handleError('userid', 'maxlength')">Maximum <strong>4</strong>character allowed</mat-error> -->
+</mat-form-field> 
+<br>
+           
+  <mat-form-field field class="example-full-width" color="accent" appearance="outline"><mat-label>Mobile Number</mat-label>
+    <input matInput type="text" formControlName="mobileNo" [(ngModel)]="userDetails.mobileNo"  name="mobileNo" required placeholder="Mobile No">
+    <mat-error *ngIf="handleError('mobileNo', 'required')"> <strong>mobile no</strong></mat-error>
+    <mat-error *ngIf="handleError('mobileNo', 'minlength')">You must provide a<strong>valid mobile no</strong></mat-error>
+    <mat-error *ngIf="handleError('mobileNo', 'maxlength')">You must provide a<strong>valid mobile no</strong></mat-error>
+    </mat-form-field>
+  <br>
+    <mat-form-field field class="example-full-width" color="accent" appearance="outline" ><mat-label>Email Id</mat-label>
+      <input matInput type="text" name="email" formControlName="email" [(ngModel)]="userDetails.email" placeholder="Email Id"   required >
+      <mat-error *ngIf="handleError('email', 'required')">You must provide a <strong>Email</strong></mat-error>
+      <mat-error *ngIf="handleError('email', 'email')">You must provide a <strong>Email</strong></mat-error>
+    </mat-form-field>
+  
+ 
+        </mat-card-content>
+        <button mat-stroked-button color="accent" [disabled]="!EditForm.valid" type="submit">Update</button>
+      </form>
+    </mat-card>
+  
+ 

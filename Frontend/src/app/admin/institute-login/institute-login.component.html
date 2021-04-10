@@ -1,0 +1,46 @@
+
+
+
+<div *ngIf="loading" class="loading-indicator">
+  <mat-progress-spinner mode="indeterminate" color="accent"></mat-progress-spinner>
+</div>
+
+<div class="login-wrapper" fxLayout="column" fxLayoutAlign="center center">
+  <img src="/assets/img/logo2.png" fxLayoutAlign="center center" class="img"><br>
+  <mat-card class="box">
+  
+    <mat-card-header>
+      <mat-card-title><h3>Login to Institute</h3></mat-card-title>
+    </mat-card-header>
+
+      <form class="example-form" [formGroup]="instituteForm" (ngSubmit)="onSubmit(instituteForm)" >
+      <mat-card-content>
+        
+      <mat-form-field field class="example-full-width" color="accent" appearance="outline" ><mat-label>User Id</mat-label>
+        <input matInput type="text" name="userid" formControlName="userid" placeholder="Enter your Userid"  required >
+        <mat-error *ngIf="handleError('userid', 'required')">
+          You must provide a <strong>UserId</strong>
+        </mat-error>
+      </mat-form-field>
+
+  
+
+    <mat-form-field field class="example-full-width" color="accent" appearance="outline">
+      <mat-label>Enter your password</mat-label>
+      <input matInput [type]="hide ? 'password' : 'text'" name="password" formControlName="password" placeholder="Password" >
+      <mat-error *ngIf="handleError('password', 'required')">
+        You must provide a <strong>Password</strong>
+      </mat-error>
+      <button type="button" mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
+      <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+      </button>
+    </mat-form-field>
+
+      </mat-card-content>
+      <button mat-raised-button  color="accent" type="submit" [disabled]="!instituteForm.valid" class="btn-block">Login</button>
+      
+    </form>
+   
+  </mat-card>
+
+</div>

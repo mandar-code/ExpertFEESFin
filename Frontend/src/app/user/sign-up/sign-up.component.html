@@ -1,0 +1,69 @@
+
+<div class="login-wrapper" fxLayout="column" fxLayoutAlign="center center">
+    <img src="/assets/img/logo2.png" fxLayoutAlign="center center" class="img">
+    <br>
+  <mat-card class="box">
+   
+    <mat-card-header>
+      <mat-card-title><h3>Register</h3></mat-card-title>
+    </mat-card-header>
+
+    <form class="example-form" [formGroup]="signUpForm" (ngSubmit)="onSubmit(signUpForm)">
+      <mat-card-content>
+        <h4 fxLayoutAlign="center center">Account Details</h4>
+        <div fxLayout="row">
+         <div fxLayout="column" class="example-full-width">
+          <mat-form-field field class="example-full-width" color="accent" appearance="outline" ><mat-label>Email </mat-label>
+            <input matInput type="text" name="email" formControlName="email" placeholder="Email "  required >
+            <mat-icon matSuffix>email</mat-icon>
+            <mat-error *ngIf="handleError('email', 'required')">You must provide a <strong>Email</strong></mat-error>
+            <mat-error *ngIf="handleError('email', 'email')">You must provide a <strong>Email</strong></mat-error>
+          </mat-form-field>
+          <mat-form-field field class="example-full-width" color="accent" appearance="outline"><mat-label>Mobile Number</mat-label>
+            <span matPrefix>+91 &nbsp;</span>
+              <mat-icon matSuffix>phone</mat-icon>
+            <input matInput type="text" formControlName="mobileNo"  name="mobileNo" required placeholder="Mobile No" (keypress)="numberOnly($event)">
+            <mat-error *ngIf="handleError('mobileNo', 'required')">You must provide a <strong>Mobile no</strong></mat-error>
+            <mat-error *ngIf="handleError('mobileNo', 'minlength')">You must provide a<strong>valid mobile no</strong></mat-error>
+            <mat-error *ngIf="handleError('mobileNo', 'maxlength')">You must provide a<strong>valid mobile no</strong></mat-error>
+            </mat-form-field>
+            <mat-form-field class="example-full-width" color="accent" appearance="outline" ><mat-label>User Id</mat-label>
+              <input matInput type="text" formControlName="userid"  name="userid" required placeholder="User ID">
+              <mat-icon matSuffix>account_circle</mat-icon>
+              <mat-error *ngIf="handleError('userid', 'required')">You must provide a <strong>User Id</strong></mat-error>
+              <mat-error *ngIf="handleError('userid', 'minlength')">UserId must have Minimum<strong>4</strong>character</mat-error>
+              <mat-error *ngIf="handleError('userid', 'maxlength')">Maximum <strong>15</strong>character allowed</mat-error>
+             </mat-form-field> 
+         </div>
+         <div fxLayout="column" class="example-full-width">
+          <mat-form-field class="example-full-width" color="accent" appearance="outline">
+            <mat-label>Password</mat-label>
+            <input matInput [type]="hide ? 'password' : 'text'" formControlName="password" placeholder="Enter your password" required>
+            <mat-error *ngIf="handleError('password', 'required')"> You must provide a <strong>Password</strong></mat-error>
+            <mat-error *ngIf="handleError('password', 'minlength')"> You must provide a Password with  <strong>atleast 8 character</strong></mat-error>
+            <button type="button" mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
+            <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+            </button>
+          </mat-form-field>
+          <mat-form-field class="example-full-width" color="accent" appearance="outline">
+            <mat-label>Confirm Password</mat-label>
+            <input   matInput [type]="hide2 ? 'password' : 'text'" formControlName="confirmpassword" placeholder="Confirm your password" required>
+            <mat-error *ngIf="handleError('confirmpassword', 'required')">You must provide a <strong>Password</strong>      </mat-error>
+            <mat-error *ngIf="handleError('confirmpassword','notEquivalent')">Passwords do not match</mat-error>
+            <mat-error *ngIf="handleError('confirmpassword', 'minlength')"> You must provide a Password with  <strong>atleast 8 character</strong></mat-error>
+            <button type="button" mat-icon-button matSuffix (click)="hide2 = !hide2"  >
+            <mat-icon>{{hide2 ? 'visibility_off' : 'visibility'}}</mat-icon>
+            </button>
+          </mat-form-field>
+          <div fxLayout="row">
+            <button class="btn-block" mat-stroked-button color="accent" routerLink="/login" type="button" >Cancel</button>
+            <button class="btn-block" mat-raised-button color="accent" type="submit"  [disabled]="!signUpForm.valid">Register</button>
+          </div> 
+         </div>
+
+        </div>
+    
+      </mat-card-content>
+    </form>
+  </mat-card>
+</div>

@@ -1,0 +1,46 @@
+mat-card{
+  margin: 30px;
+  
+}
+mat-form-field{
+  width: 300px;
+  margin-left: 100px;
+}
+.button{
+  margin: auto;
+}
+.clg{
+  color: blue;
+  align-items: center;
+  vertical-align: middle;
+}
+.align{
+
+  align-items: center;
+  vertical-align: middle;
+}
+.navbar{justify-content: space-between; }
+
+span{padding-right: 1rem;color: #2962FF;font-family: Verdana, Geneva, Tahoma, sans-serif;display: inline-flex;vertical-align: middle;align-items: center;}
+mat-toolbar{
+  background: #184cdb;
+}
+h4{
+  color: white;
+}
+
+a{
+  color: #184cdb;
+  text-decoration: none;
+}
+
+mat-icon{
+  display: inline-flex;
+  vertical-align: middle;
+  align-items: center; 
+  margin-right:5px; color: white;}
+
+.menu-spacer {
+flex: 1 1 auto;
+}
+

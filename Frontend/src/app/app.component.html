@@ -1,0 +1,7 @@
+
+
+<div [ngClass]="{'grid-mobile-container': isMobileDashboard(), 'grid-web-container': !isMobileDashboard()}">
+    <app-navbar></app-navbar>
+    <router-outlet></router-outlet>
+</div>
+

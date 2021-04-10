@@ -1,0 +1,84 @@
+@import url('https://fonts.googleapis.com/css?family=Roboto');
+.loggeduser{
+  font-size: small;
+  border-color: #2962FF;
+}
+.loggeduser.mat-icon{
+  padding: 0;
+  margin: 0;
+}
+.sidenav-container{
+  height: 100%;}
+
+.sidenav{width: 250px;
+  background: white;
+}
+
+/* .sidenav .mat-toolbar {height: 43px;} */
+.active-list-item {
+  color: #184cdb !important;
+}
+.mat-list-item{color: grey;}
+
+.tool{background-color: white; display: inline-flex;vertical-align: middle; align-items: center;  margin-top: 0;}
+.tool1{background-color: white;}
+.nav-caption{display: inline-block;padding-left: 6px;}
+
+.image{margin-left: 20px;margin-top: 30px;width: 80%;}
+
+.router-link-active {color: #184cdb;
+background-color: gray;
+}
+
+a{color: gray;font-size: medium;  display: inline-block;font-family: 'Roboto', sans-serif;; text-decoration: none !important;}
+
+span{
+  font-size: 15px;
+}
+.icon{
+  color: black;
+}
+.mat-icon{
+  color: #184cdb;
+  margin-left: 15px;
+  margin-right: 15px;
+  display: inline-flex;
+  vertical-align: middle;
+  align-items: center;
+  font-size: 20px;
+
+}
+
+.img2{
+  width: 2%;
+  
+ }
+.spacer {
+  flex: 1 1 auto;
+}
+.userdetails{
+  margin: auto;
+  color: grey;
+  text-align: center;
+  padding: 0 20 20 20px;
+}
+
+
+.img1{
+  width: 70px;
+  height: 70px;
+  object-fit: cover;
+  border-radius: 50%;
+  border-color: blue;
+  margin: auto;
+  box-shadow:
+    inset 0 0 8px blue, /* Inset shadow */
+    0 0 8px blue, /* Outset shadow */
+    inset -999px 0 0 #fff; /* The background color */
+}
+
+.aligned-with-icon{
+  position: absolute;
+  margin-top: 5px;
+  margin-left: 5px; /* optional */
+}

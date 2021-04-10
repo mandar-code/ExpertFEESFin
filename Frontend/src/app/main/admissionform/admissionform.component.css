@@ -1,0 +1,124 @@
+/* @import "~bootstrap/dist/css/bootstrap.css"; */
+.example-full-width {
+  width: 100%;
+  margin: auto;
+}
+* {
+  box-sizing: border-box;
+}
+.mat-card{
+  width: auto;
+  height: auto;
+  margin: 20px;
+}
+.btn {
+  width: 120px;
+}
+.column {
+  float: left;
+  width: 50%;
+  height: auto; 
+}
+/* .column3 {
+  float: right;
+  width: 0%;
+  height: auto; 
+} */
+.row:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+.mat-form-field{
+  padding-left: 5px;
+  padding-right: 5px;
+  padding-bottom: 0;
+}
+.mb-2{
+  margin-left: 10px;
+}
+.mat-tab-label.mat-tab-label-active {
+  color: #184cdb;
+  opacity: 1;
+}
+body {margin: 0px;}
+
+/* ::ng-deep .mat-tab-label {
+  pointer-events: none;
+} */
+mat-tab{background-color:white;}
+.mat-tab-span{size: 15px;}
+.mat-tab-label{color: gray;}
+.mat-tab.iron-icon{position: fixed;}
+
+mat-form-field {font-family:Arial, Helvetica, sans-serif;font-size: 14px;outline-color: blue;
+margin-right: 15px;font-style: inherit;margin-left: auto;width: 300px;
+}
+
+mat-hint{  color: red;}
+
+
+mat-card{margin-left:10px;margin-right: 10px; }
+.mat-icon{color: #184cdb;;size: 3cm;margin-top: 3px;margin-left: 2px;margin-right: 2px;}
+
+img{width: 100px;}
+
+.a{margin-right: 15px;width: 120px;}
+
+h5{color: black;margin-left: 10px;}
+
+.imageerror{margin-left: 40%;}
+
+.img-space img {display: block;width: 100%;}
+
+.fileInputProfileWrap {  width:100px;height: 100px;margin-left: 150px;margin-top: 0;}
+
+.toolbar-spacer {flex: 1 1 auto;}
+
+.image-wrap1 {padding: 10px;border: solid 1px #e0e0e0;display: inline-block;}
+
+.img-space1 img {display: block;width: 100%;height: 100%;cursor: pointer;}
+
+.fileInputProfileWrap1 {width: 10%;height: auto;margin-top: 50px;margin-left: 300px;}
+
+.fileInputProfile1 {position: absolute;height: 10%;width: 10%;z-index: 99;opacity: 0;margin-top: 0em;}
+
+.file{font-size: 0.3cm;color: #184cdb;;}
+.container{width: 100;height: auto;display: flex;flex-direction: row;justify-content: space-evenly;flex-flow: wrap;}
+
+.box1{width: 350px;height: auto;margin: 20px;box-sizing: border-box;border: #184cdb;;}
+ .middle{margin-left: 35%;}
+
+ /* p{
+   color: red;
+   font-size: small;
+ } */
+
+ .row{
+   display: inline-flexbox;
+ }
+ .check{
+   font-size: large;
+ }
+ .check2{
+  vertical-align: middle;align-items: center;
+}
+
+@media screen and(max-width:1200px){
+  .box{
+      width:40%
+  }
+
+}
+@media screen and(max-width:600px){
+  .box{
+      width:90%
+  }
+
+  
+}
+button{
+ 
+  font-style: normal;
+  
+}

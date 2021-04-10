@@ -1,0 +1,60 @@
+@import "~bootstrap/dist/css/bootstrap.css";
+.color-prescp {
+    color: black;
+  }
+  
+  .watermark {
+    
+      opacity: 0.1;
+      position: absolute;
+      width: 700px;
+      height: 600px;
+      top: 40%;
+      left: 45%;
+      transform: translate(-50%, -50%);
+      background-size: 60%;
+  }
+  .wrapper{
+    overflow-x: hidden;
+    overflow-y: auto;
+    background-color: #f4f2fd;
+    height: 100%;
+    position: relative;
+  }
+  .inner-container{
+    padding: 25px;
+  }
+  .plr-5{
+    padding-left: 40px;
+    padding-right: 40px; 
+    padding-top: 30px;
+  }
+  th{
+    color: gray;
+  }
+  th, td{
+    padding: 5px;
+    text-align: center;
+  }
+  thead{
+    border-top: 1px solid rgb(189, 188, 188) !important;
+    border-bottom: 1px solid rgb(189, 188, 188) !important;
+  }
+  tr{
+    border: none;
+  }
+  tr:last-child{
+    border-bottom: 1px solid rgb(189, 188, 188) !important;
+  }
+  .align-left{
+    text-align: left;
+    padding-left: 20px;
+  }
+  
+  .stick-to-bottom{
+    position:absolute;
+    bottom: 10px;
+  }
+  .action-btn:hover{
+    cursor: pointer;
+  }

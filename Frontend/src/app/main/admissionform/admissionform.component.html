@@ -1,0 +1,893 @@
+<div [ngClass]="{'grid-mobile-container': isMobileDashboard(), 'grid-web-container': !isMobileDashboard()}">
+  
+ <div class="">
+
+ </div>
+    
+
+
+<!-- <p *ngIf="applicationForm">{{applicationForm.course}}</p> -->
+
+<!-- <form #form="ngForm" > -->
+  <mat-tab-group mat-stretch-tabs class="example-stretched-tabs mat-elevation-z4" style="box-sizing: content-box;"
+  [(selectedIndex)]="selectedIndex" (selectedTabChange)="tabChanged($event)" class="mat-accent">
+ 
+  
+  <form [formGroup]="studentForm" (ngSubmit)="onSubmitApplication(studentForm)" >
+  <!-- Course Category -->
+
+    <mat-tab>
+      <ng-template mat-tab-label >
+        <div >
+        <mat-icon fontSet="material-icons-outlined">assignment</mat-icon>
+        <br>
+        <span>Courses & Category</span>
+        </div>
+      </ng-template>
+      <section>
+        <mat-card>
+                
+          <mat-card-content >
+            <!-- <h4>Course & Category</h4> -->
+<!-- <button (click)="generatePdf()">ffff</button> -->
+            <table class="example-full-width" cellspacing="0">
+              <tr>
+                <td><mat-label>Are you inouse a student?</mat-label><br>
+                  <mat-radio-group aria-label="Select an option" [(ngModel)]="student.inhouse" matInput formControlName="inhouse"  required  >
+                    <mat-radio-button value="YES">Yes</mat-radio-button><br>
+                    <mat-radio-button value="NO">No</mat-radio-button>
+                  </mat-radio-group></td>
+                <td><mat-form-field appearance="fill" color="accent" class="example-full-width"><mat-label>Category</mat-label>
+                  <mat-select matInput placeholder="Category" [(ngModel)]="student.category"   required formControlName="category" name="category">
+                 <mat-option value="SC">SC</mat-option>
+                 <mat-option value="Open">Open</mat-option>
+                 <mat-option value="SC">SC</mat-option>
+                 <mat-option value="ST">ST</mat-option>
+                 <mat-option value="SBC">SBC</mat-option>
+                 <mat-option value="NTB">NT-B</mat-option>
+                 <mat-option value="ObC">OBC</mat-option>
+                 <mat-option value="VJ">VJ</mat-option>
+                 <mat-option value="Nt-C">NT-C</mat-option>
+                 <mat-option value="Nt-D">NT-D</mat-option>
+         </mat-select>
+         <mat-error *ngIf="hasError('category', 'required')"> required</mat-error>
+       </mat-form-field></td>
+       <td> <mat-form-field class="example-full-width" appearance="fill" color="accent"><mat-label>Course</mat-label>
+        <mat-select matInput placeholder="Course" formControlName="course" name="course"  [(ngModel)]="student.course" required  >
+          <mat-option value="BSC Computer Science">Bsc Computer Science</mat-option>
+        </mat-select>
+        <mat-error *ngIf="hasError('course', 'required')"> required</mat-error>
+      </mat-form-field></td>
+       <td> <mat-form-field class="example-full-width"  appearance="fill" color="accent"><mat-label>Seat No</mat-label>
+        <input matInput type="text" placeholder="Prevoius year Roll No" formControlName="seatno" [(ngModel)]="student.seatno"  minlength="3">
+        </mat-form-field></td>
+              </tr>
+            </table>
+
+
+          </mat-card-content>
+
+          <mat-card-actions align="end">
+            <button  mat-stroked-button color="accent" (click)="prevStep()" style="margin-right: 16px"[disabled]="selectedIndex== 0">Previous</button>
+            <button mat-raised-button color="accent"  (click)="nextStep()">Next</button>
+          </mat-card-actions>
+
+        </mat-card>
+      </section>
+    </mat-tab>
+
+   <!-- Personal Details -->
+        <mat-tab >
+          <ng-template mat-tab-label >
+            <div >
+              <mat-icon fontSet="material-icons-outlined">person</mat-icon>
+            <br>
+            <span>Personal Information</span>
+            </div>
+          </ng-template>
+          <section >
+            <mat-card >
+                <mat-card-content>
+                <h4>Personal Information</h4>
+                <div fxLayout="row">
+                  <mat-form-field class="example-full-width" appearance="fill" color="accent"><mat-label>Name as Per SSC/HSC Mark Sheet</mat-label>
+                    <input  matInput type="text"   placeholder="Name as per SSC/HSC Marksheet" [(ngModel)]="student.fullname"  formControlName="fullname" required minlength="3">
+                    <mat-error *ngIf="hasError('fullname', 'required')"> required</mat-error>
+                    <mat-error *ngIf="hasError('fullname', 'minlength')">Atleast 3 characters</mat-error>
+                  </mat-form-field>
+
+                  <mat-form-field class="example-full-width" appearance="fill" color="accent"><mat-label>Mother Name</mat-label>
+                    <input  matInput type= "text" (keypress)="letterOnly($event)" placeholder="Mother Name" type="text" [(ngModel)]="student.mothername"  formControlName="mothername" required minlength="3">
+                    <mat-error *ngIf="hasError('mothername', 'required')"> required</mat-error>
+                    <mat-error *ngIf="hasError('mothername', 'minlength')">Atleast 3 characters</mat-error>
+                  </mat-form-field>
+
+                  <mat-form-field class="example-full-width" appearance="fill" color="accent"><mat-label>Date of Birth</mat-label>
+                    <input  matInput [matDatepicker]="picker" disabled  placeholder="Date of Birth" [(ngModel)]="student.dob" [min]="minDate" [max]="maxDate"  formControlName="dob"
+                     name="dob" required>
+                    <mat-datepicker-toggle matSuffix [for]="picker" color="accent"></mat-datepicker-toggle>
+                    <mat-datepicker #picker disabled="false"></mat-datepicker>
+                    <mat-error *ngIf="hasError('dob', 'required')"> required</mat-error>
+                    <!-- <mat-error *ngIf="hasError2('dob', 'min')"> required</mat-error> -->
+                    </mat-form-field>
+                </div>
+                <div fxLayout="row">
+                  <mat-form-field class="example-full-width" appearance="fill" color="accent"><mat-label>First Name</mat-label>
+                    <input matInput placeholder="First name" (keypress)="letterOnly($event)" type="text" formControlName="firstname" [(ngModel)]="student.firstname"  required >
+                    <mat-error *ngIf="hasError('firstname', 'required')"> required</mat-error>
+                  <mat-error *ngIf="hasError('firstname', 'minlength')">Atleast 3 characters</mat-error>
+                    </mat-form-field>
+
+                  <mat-form-field class="example-full-width" appearance="fill" color="accent"><mat-label>Middle Name</mat-label>
+                    <input matInput placeholder="Middle Name" (keypress)="letterOnly($event)" type="text" [(ngModel)]="student.middlename"  required formControlName="middlename"  >
+                    <mat-error *ngIf="hasError('middlename', 'required')"> required</mat-error>
+                  </mat-form-field>
+
+                  <mat-form-field class="example-full-width" appearance="fill" color="accent"><mat-label>Last Name</mat-label>
+                     <input matInput placeholder="Last Name" (keypress)="letterOnly($event)" type="text" [(ngModel)]="student.lastname" type="text" formControlName="lastname" >
+                  </mat-form-field>
+                </div>
+                <div fxLayout="row">
+                  <mat-form-field class="example-full-width"  appearance="fill" color="accent"><mat-label>Gender</mat-label>
+                    <mat-select formControlName="gender" [(ngModel)]="student.gender" name="gender" required  >
+                    <mat-option value="Male">Male</mat-option>
+                    <mat-option value="Female">Female</mat-option>
+                    <mat-option value="Other">Other</mat-option>
+                    </mat-select>
+                    <mat-error *ngIf="hasError('gender', 'required')"> required</mat-error>
+                  </mat-form-field>
+                  <mat-form-field class="example-full-width" appearance="fill" color="accent"><mat-label>Marital Status</mat-label>
+                    <mat-select required formControlName="mstatus" [(ngModel)]="student.mstatus" >
+                      <mat-option value="Unmarried">Unmarried</mat-option>
+                      <mat-option value="Married">Married</mat-option>
+                    </mat-select>
+                    <mat-error *ngIf="hasError('mstatus', 'required')"> required</mat-error>
+                  </mat-form-field>
+                  <mat-form-field class="example-full-width" appearance="fill" color="accent"><mat-label>Place of Birth</mat-label>
+                    <input matInput placeholder="Place Of Birth" (keypress)="letterOnly($event)" [(ngModel)]="student.pob" required formControlName="pob"   >
+                    <mat-error *ngIf="hasError('pob', 'required')"> required</mat-error>
+                  </mat-form-field>
+                  <mat-form-field class="example-full-width" appearance="fill" color="accent"><mat-label>Nationality</mat-label>
+                    <mat-select  required formControlName="nationality"  [(ngModel)]="student.nationality" >
+                    <mat-option value="Indian">Indian</mat-option></mat-select>
+                    <mat-error *ngIf="hasError('nationality', 'required')"> required</mat-error>
+                   </mat-form-field>
+                </div>
+                <div fxLayout="row">
+                  <mat-form-field class="example-full-width" appearance="fill" color="accent"><mat-label>Religion</mat-label>
+                    <mat-select  required formControlName="religion" [(ngModel)]="student.religion" >
+                      <mat-option value="Hindu">Hindu</mat-option>
+                      <mat-option value="Buddist">Buddist</mat-option>
+                      <mat-option value="Jain" >Jain</mat-option>
+                      <mat-option value="Parsi">Parsi</mat-option>
+                      <mat-option value="Sikh">Sikh</mat-option>
+                      <mat-option value="Christian" >Christian</mat-option>
+                      <mat-option value="Muslim" >Muslim</mat-option>
+                    </mat-select>
+                    <mat-error *ngIf="hasError('religion', 'required')"> required</mat-error>
+                  </mat-form-field>
+                  <mat-form-field class="example-full-width" appearance="fill" color="accent"> <mat-label>Sub Caste</mat-label>
+                    <input matInput placeholder="Sub-caste" formControlName="subcaste" (keypress)="letterOnly($event)" name="subcaste" [(ngModel)]="student.subcaste" >
+                  </mat-form-field>
+                  <mat-form-field class="example-full-width" appearance="fill" color="accent"> <mat-label>Mother Tomgue</mat-label>
+                    <mat-select  formControlName="mothertongue" required [(ngModel)]="student.mothertongue" >
+                      <mat-option value="english">English</mat-option>
+                      <mat-option value="marathi">Marathi</mat-option>
+                      <mat-option value="gujrati">Gujrati</mat-option>
+                      <mat-option value="hindi">Hindi</mat-option>
+                      <mat-option value="kokani">Konkani</mat-option>
+                      <mat-option value="panjabi">Panjabi</mat-option>
+                      <mat-option value="punjabi">Punjabi</mat-option>
+                      <mat-option value="urdu">Urdu</mat-option>
+                    </mat-select>
+                    <mat-error *ngIf="hasError('mothertongue', 'required')"> required</mat-error>
+                  </mat-form-field>
+
+                    <mat-form-field class="example-full-width" appearance="fill" color="accent"><mat-label>Aadhar Number</mat-label>
+                      <input matInput placeholder="Aadhar Number"  (keypress)="numberOnly($event)" formControlName="aadhar" [(ngModel)]="student.aadhar" minLength="12" maxLength="12"
+                      type="tel" required  >
+                      <mat-error *ngIf="hasError('aadhar', 'required')"> required</mat-error>
+                    </mat-form-field>
+                </div>
+                <div fxLayout="row">
+                  <mat-form-field class="example-full-width" appearance="fill" color="accent"><mat-label>Blood Group</mat-label>
+                    <mat-select  required formControlName="bloodgroup" [(ngModel)]="student.bloodgroup" >
+                      <mat-option value="A +ve" >A +ve</mat-option>
+                      <mat-option value="ARH +ve">ARH +ve</mat-option>
+                      <mat-option value="ARH -ve">ARH -ve</mat-option>
+                      <mat-option value="AB +ve">AB +ve</mat-option>
+                      <mat-option value="AB -ve">AB -ve</mat-option>
+                      <mat-option value="B +ve">B +ve</mat-option>
+                      <mat-option value="O +ve">O +ve</mat-option>
+                      <mat-option value="O -ve">O -ve</mat-option>
+                      <mat-option value="A -ve">A -ve</mat-option>
+                      <mat-option value="B -ve">B -ve</mat-option>
+                    </mat-select>
+                    <mat-error *ngIf="hasError('bloodgroup', 'required')"> required</mat-error>
+                  </mat-form-field>
+                  
+                <mat-form-field class="example-full-width" appearance="fill" color="accent"><mat-label>Phone Number</mat-label>
+                  <input matInput placeholder="Number"  (keypress)="numberOnly($event)" maxlength="10" minlength="10"  formControlName="mobileno" type="tel" [(ngModel)]="student.mobileno"  required  >
+                   <mat-error *ngIf="hasError('mobileno', 'required')"> required</mat-error>
+                </mat-form-field>
+
+                <mat-form-field class="example-full-width"appearance="fill" color="accent"><mat-label>Email</mat-label>
+                  <input matInput  type="email" placeholder="Email" formControlName="email" required [(ngModel)]="student.email" >
+                  <mat-error *ngIf="hasError('email', 'required')"> required</mat-error>
+                  <mat-error *ngIf="hasError('email', 'email')"> please provide valis email</mat-error>
+                </mat-form-field>
+
+                <mat-form-field class="example-full-width" appearance="fill" color="accent"><mat-label>Telephone</mat-label>
+              <input matInput placeholder="Telephone"  (keypress)="numberOnly($event)" formControlName="telephone" [(ngModel)]="student.telephone" >
+                </mat-form-field>
+                </div>
+                <div fxLayout="row">
+                  <mat-form-field class="example-full-width"  appearance="fill" color="accent"><mat-label>Sports </mat-label>
+                    <input matInput placeholder="Sports" (keypress)="letterOnly($event)" formControlName="game" [(ngModel)]="student.game" > 
+                  </mat-form-field>
+  
+                  <mat-form-field class="example-full-width" appearance="fill"color="accent"><mat-label>Extra Curricular </mat-label>
+                    <input matInput placeholder="Extra Curricular"(keypress)="letterOnly($event)" formControlName="extrac" [(ngModel)]="student.extrac" > 
+                  </mat-form-field>
+  
+                  <mat-form-field class="example-full-width" appearance="fill"color="accent"><mat-label>Other Activity </mat-label>
+                    <input matInput placeholder="Other Activity" (keypress)="letterOnly($event)" formControlName="other" [(ngModel)]="student.other" > 
+                  </mat-form-field>
+  
+                  <mat-form-field class="example-full-width" appearance="fill" color="accent"><mat-label>Any Disability: If No= NA</mat-label>
+                    <input matInput placeholder="Any Disability" (keypress)="letterOnly($event)" formControlName="ad" [(ngModel)]="student.ad" ><mat-hint>If Any</mat-hint> 
+                  </mat-form-field>
+                </div>
+
+
+                <mat-divider></mat-divider><br>
+                <h4>Father Details</h4>
+                <table class="example-full-width">
+                  <tr>
+                    <td><mat-form-field class="example-full-width" appearance="fill" color="accent"><mat-label>Father Name</mat-label>
+                      <input matInput placeholder="Father's Full name" (keypress)="letterOnly($event)" type="text" required  formControlName="fname" [(ngModel)]="student.fname">
+                      <mat-error *ngIf="hasError('fname', 'required')"> required</mat-error>
+                      </mat-form-field></td>
+
+                      <td> <mat-form-field class="example-full-width"  appearance="fill" color="accent"><mat-label>Qualification</mat-label>
+                        <input matInput placeholder="Qualification" (keypress)="letterOnly($event)" type="text" formControlName="fqualification" [(ngModel)]="student.fqualification"  >
+                      </mat-form-field></td>
+
+                      <td> <mat-form-field class="example-full-width" appearance="fill" color="accent"><mat-label>Occupation</mat-label>
+                        <mat-select  required   formControlName="foccupation" [(ngModel)]="student.foccupation" >
+                          <mat-option value="0">--Select--</mat-option>
+                            <mat-option value="Service">Service</mat-option>
+                            <mat-option value="Buisness" >Buisness</mat-option>
+                            <mat-option value="Labour">Labour</mat-option>
+                            <mat-option value="NA">NA</mat-option>
+                          </mat-select>
+                        <mat-error *ngIf="hasError('foccupation', 'required')"> required</mat-error>
+                      </mat-form-field></td>
+                      <td><mat-form-field class="example-full-width" appearance="fill" color="accent"><mat-label>Name of Organisation</mat-label>
+                        <input matInput placeholder="Name of Organisation" (keypress)="letterOnly($event)" type="text" formControlName="fnameoforg" [(ngModel)]="student.fnameoforg"  >
+                      </mat-form-field></td>
+                  </tr>
+                  <tr>
+                    <td> <mat-form-field class="example-full-width"appearance="fill" color="accent"><mat-label>Designation</mat-label>
+                      <input matInput placeholder="Designation" type="text" (keypress)="letterOnly($event)" [(ngModel)]="fdesignation" formControlName="fdesignation" [(ngModel)]="student.fdesignation" >
+                    </mat-form-field></td>
+                    <td> <mat-form-field class="example-full-width"appearance="fill" color="accent"><mat-label>Office Address</mat-label>
+                      <input matInput placeholder="Office Address" [(ngModel)]="foffice"   type="text" formControlName="foffice" [(ngModel)]="student.foffice"  >
+                    </mat-form-field></td>
+                    <td>   <mat-form-field class="example-full-width"appearance="fill" color="accent" ><mat-label > Family Annual Income</mat-label>
+                      <input matInput placeholder="Ex: 200000" [(ngModel)]="fincome" required formControlName="fincome" type="number" [(ngModel)]="student.fincome" >
+                      <mat-error *ngIf="hasError('fincome', 'required')"> required</mat-error>
+                    </mat-form-field></td>
+                    <td> <mat-form-field class="example-full-width" appearance="fill" color="accent"><mat-label>Mobile No</mat-label>
+                      <input matInput placeholder="Mobile Number" (keypress)="letterOnly($event)" (keypress)="numberOnly($event)" [(ngModel)]="fmobile" required type="tel" maxlength="10" minlength="10"
+                      formControlName="fmobile" [(ngModel)]="student.fmobile" >
+                      <mat-error *ngIf="hasError('fmobile', 'required')"> required</mat-error>
+                    </mat-form-field></td>
+                  </tr>
+
+                </table>
+                 
+
+                  <mat-divider></mat-divider>
+                  <br>
+                  <h4>Mother Details</h4>
+                  <div fxLayout="row">
+                    <mat-form-field class="example-full-width"  appearance="fill" color="accent"><mat-label>Mother Name</mat-label>
+                      <input matInput placeholder="Mother's Full name"  (keypress)="letterOnly($event)"type="text" [(ngModel)]="student.motherfullname" required formControlName="motherfullname" >
+                      <mat-error *ngIf="hasError('motherfullname', 'required')"> required</mat-error>
+                      <mat-error *ngIf="hasError('motherfullname', 'minlength')"> required</mat-error>
+                      </mat-form-field>
+                      <mat-form-field class="example-full-width" appearance="fill" color="accent"><mat-label>Qualification</mat-label>
+                        <input matInput class="example-full-width" (keypress)="letterOnly($event)" placeholder="Qualification" type="text" formControlName="mqualification" [(ngModel)]="student.mqualification"  >
+                      </mat-form-field>
+                      <mat-form-field class="example-full-width"  appearance="fill" color="accent"><mat-label>Occupation</mat-label>
+                        <mat-select   formControlName="moccupation" [(ngModel)]="student.moccupation"  >
+                          <mat-option value="0">--Select--</mat-option>
+                          <mat-option value="Service">Service</mat-option>
+                          <mat-option value="Buisness" >Buisness</mat-option>
+                          <mat-option value="Labour">Labour</mat-option>
+                          <mat-option value="NA">NA</mat-option>
+                        </mat-select>
+                      </mat-form-field>
+                  </div>
+                  <div fxLayout="row">
+                    <mat-form-field class="example-full-width" appearance="fill" color="accent"><mat-label>Name of Organisation</mat-label>
+                      <input matInput placeholder="Name of Organisation" (keypress)="letterOnly($event)"[(ngModel)]="student.mnameoforg" type="text" formControlName="mnameoforg">
+                    </mat-form-field>
+                    <mat-form-field class="example-full-width"appearance="fill" color="accent"><mat-label>Designation</mat-label>
+                      <input matInput placeholder="Designation" type="text"(keypress)="letterOnly($event)" [(ngModel)]="student.mdesignation" formControlName="mdesignation">
+                    </mat-form-field>
+                    <mat-form-field class="example-full-width" appearance="fill" color="accent"><mat-label>Office Address</mat-label>
+                      <input matInput placeholder="Office Address" [(ngModel)]="student.moffice"  type="text" formControlName="moffice">
+                    </mat-form-field>
+                    <mat-form-field class="example-full-width" appearance="fill" color="accent"><mat-label>Mobile No</mat-label>
+                      <input matInput placeholder="Mobile Number"  (keypress)="numberOnly($event)" [(ngModel)]="student.mother_mobileno"  color="accent" type="tel" formControlName="mother_mobileno"    >
+                    </mat-form-field>
+                  </div>
+                  
+                        <mat-divider></mat-divider>
+                      
+                      <br>
+                      <h4>Guardian Details</h4>
+                    
+
+                      <div fxLayout="row">
+                        <mat-form-field class="example-full-width" appearance="fill" color="accent"><mat-label>Guardian Name</mat-label>
+                          <input matInput [(ngModel)]="student.guardian_name" (keypress)="letterOnly($event)"placeholder="Guardian s Name" type="text" formControlName="guardian_name" >
+                          </mat-form-field>
+                          <mat-form-field class="example-full-width" appearance="fill" color="accent"><mat-label>Qualification</mat-label>
+                            <input matInput (keypress)="letterOnly($event)" [(ngModel)]="student.guardian_qualification" placeholder="Qualification" type="text" formControlName="guardian_qualification">
+                          </mat-form-field>  
+                          <mat-form-field class="example-full-width" appearance="fill" color="accent"><mat-label>Occupation</mat-label>
+                            <mat-select [(ngModel)]="student.guardian_occupation" formControlName="guardian_occupation" >
+                              <mat-option value="0">--Select--</mat-option>
+                              <mat-option value="Service">Service</mat-option>
+                              <mat-option value="Buisness">Buisness</mat-option>
+                              <mat-option value="labour">Labour</mat-option>
+                              <mat-option value="NA">NA</mat-option>
+                             </mat-select>
+                          </mat-form-field>
+                      </div>
+
+                      <div fxLayout="row">
+                        <mat-form-field class="example-full-width" appearance="fill" color="accent"><mat-label>Name of Organisation</mat-label>
+                          <input matInput placeholder="Name of Organisation" (keypress)="letterOnly($event)" type="text" [(ngModel)]="student.gnameoforg"  formControlName="gnameoforg"  >
+                        </mat-form-field>
+                        <mat-form-field class="example-full-width" appearance="fill" color="accent"><mat-label>Designation</mat-label>
+                          <input matInput placeholder="Designation" type="text" (keypress)="letterOnly($event)" [(ngModel)]="student.gdesignation" formControlName="gdesignation"    >
+                        </mat-form-field>
+                        <mat-form-field class="example-full-width" appearance="fill" color="accent"><mat-label>Office Address</mat-label>
+                          <input matInput placeholder="Office Address" type="text" formControlName="goffice"  [(ngModel)]="student.goffice"   >
+                        </mat-form-field>
+                        <mat-form-field class="example-full-width" appearance="fill" color="accent"><mat-label>Guardian's Mobile No</mat-label>
+                          <input matInput placeholder=" Guardian Mobile Number"  (keypress)="numberOnly($event)" color="accent" formControlName="guardian_mobileno"  [(ngModel)]="student.guardian_mobileno"  >
+                        </mat-form-field>
+                      </div>
+                    
+                         
+             
+              </mat-card-content>
+
+                <mat-card-actions align="end">
+                  <button  mat-stroked-button color="accent" (click)="prevStep()" style="margin-right: 16px">Previous</button>
+                  <button mat-raised-button color="accent" (click)="nextStep()" [disabled]="">Next</button>
+                </mat-card-actions>
+              
+            </mat-card>
+
+          </section>
+
+            </mat-tab>
+
+
+
+      <!-- Academic Achivement -->
+       <mat-tab>
+          <ng-template mat-tab-label>
+            <div >
+              <mat-icon fontSet="material-icons-outlined">school</mat-icon>
+              <br>
+             <span>Academic Achievement</span>
+            </div>
+            </ng-template>
+            <section>
+              <mat-card>
+               
+                <mat-card-content >
+                  <h4>Secondary School Certificate (SSC)</h4>
+                 <div *ngFor="let ed of student.educations; let i=index">
+                  <table class="example-full-width" cellspacing="0">
+                    <tr>
+                      <td><mat-form-field class="example-full-width" appearance="fill" color="accent"><mat-label>Examination</mat-label>
+                        <mat-select matInput placeholder="Examination" name="ssc" formControlName="ssc" [(ngModel)]="ed.ssc"  required>
+                          <mat-option value="SSC">SSC</mat-option>
+                        </mat-select>
+                        <mat-error *ngIf="hasError('ssc', 'required')"> required</mat-error>
+                      </mat-form-field></td>
+                      <td><mat-form-field class="example-full-width" appearance="fill" color="accent"><mat-label>Board/University</mat-label>
+                        <input type="text" matInput placeholder="Board" formControlName="board" name="board" required [(ngModel)]="ed.board">
+                        <mat-error *ngIf="hasError('board', 'required')"> required</mat-error>
+                      </mat-form-field></td>
+                      <td><mat-form-field class="example-full-width" appearance="fill" color="accent"><mat-label>School/College</mat-label>
+                        <input type="text" matInput placeholder="School/College"  formControlName="sc" name="sc"  required [(ngModel)]="ed.sc">
+                        <mat-error *ngIf="hasError('sc', 'required')"> required</mat-error>
+                      </mat-form-field></td>
+                      <td><mat-form-field class="example-full-width" appearance="fill" color="accent"><mat-label>Passing Year</mat-label>
+                        <input type="month" matInput placeholder=" Passing Year" formControlName="py"  name="py"  required [(ngModel)]="ed.py">
+                        <mat-error *ngIf="hasError('py', 'required')"> required</mat-error>
+                      </mat-form-field></td>
+                    </tr>
+                    <tr>
+                      <td> <mat-form-field class="example-full-width"appearance="fill" color="accent"><mat-label>Marks Obtained</mat-label>
+                        <input type="number" matInput placeholder="Marks Obtained"  (keypress)="numberOnly($event)" formControlName="mo" required [(ngModel)]="ed.mo">
+                        <mat-error *ngIf="hasError('mo', 'required')"> required</mat-error>
+                      </mat-form-field></td>
+                      <td><mat-form-field class="example-full-width"appearance="fill" color="accent"><mat-label>Marks Out Of</mat-label>
+                        <input type="number" matInput placeholder="Marks Obtained Out of"  (keypress)="numberOnly($event)" formControlName="moo" [(ngModel)]="ed.moo" required>
+                        <mat-error *ngIf="hasError('moo', 'required')"> required</mat-error>
+                      </mat-form-field></td>
+                      <td><mat-form-field class="example-full-width"appearance="fill" color="accent"><mat-label>Percentage</mat-label>
+                        <input type="number" matInput placeholder="percentage, Ex:70"  (keypress)="numberOnly($event)" formControlName="percentage" [(ngModel)]="ed.percentage"  required>
+                        <mat-error *ngIf="hasError('percentage', 'required')"> required</mat-error>
+                      </mat-form-field></td>
+                      <td> <mat-form-field class="example-full-width" appearance="fill" color="accent"><mat-label>Seat No</mat-label>
+                        <input type="text" matInput placeholder="Seat No" formControlName="seatn" [(ngModel)]="ed.seatn"  required>
+                        <mat-error *ngIf="hasError('seatn', 'required')"> required</mat-error>
+                      </mat-form-field></td>
+                    </tr>
+                  </table>
+                </div>
+                                             
+
+                    <mat-divider></mat-divider>
+                    <br>
+                    <h4>Higher Secondary Certificate (HSC)</h4>
+                    <div *ngFor="let ed of student.educations; let i=index">
+                      <table class="example-full-width" cellspacing="0">
+                        <tr>
+                          <td>  <mat-form-field class="example-full-width" appearance="fill" color="accent"><mat-label>Examination</mat-label>
+                            <mat-select matInput placeholder="Examination" formControlName="hsc" [(ngModel)]="ed.hsc" required >
+                              <mat-option value="HSC">HSC</mat-option>
+                            </mat-select>
+                            <mat-error *ngIf="hasError('hsc', 'required')"> required</mat-error>
+                          </mat-form-field></td>
+                          <td> <mat-form-field class="example-full-width"appearance="fill" color="accent"><mat-label>Board/University</mat-label>
+                            <input type="text" matInput placeholder="Board" formControlName="board1" required [(ngModel)]="ed.board1" >
+                            <mat-error *ngIf="hasError('board1', 'required')"> required</mat-error>
+                          </mat-form-field></td>
+                          <td> <mat-form-field class="example-full-width"appearance="fill" color="accent"><mat-label>School/College</mat-label>
+                            <input type="text" matInput placeholder=" School/College" formControlName="sc1" required [(ngModel)]="ed.sc1" >
+                            <mat-error *ngIf="hasError('sc1', 'required')"> required</mat-error>
+                          </mat-form-field></td>
+                          <td> <mat-form-field class="example-full-width"appearance="fill" color="accent"><mat-label>Passing Year</mat-label>
+                            <input type="month" matInput placeholder=" Passing Year" formControlName="py1" [(ngModel)]="ed.py1" required>
+                            <mat-error *ngIf="hasError('py1', 'required')"> required</mat-error>
+                          </mat-form-field></td>
+                        </tr>
+                        <tr>
+                          <td>    <mat-form-field class="example-full-width" appearance="fill" color="accent"><mat-label>Marks Obtained</mat-label>
+                            <input type="number" matInput placeholder="Marks Obtained"  (keypress)="numberOnly($event)" formControlName="mo1" [(ngModel)]="ed.mo1"  required>
+                            <mat-error *ngIf="hasError('mo1', 'required')"> required</mat-error>
+                          </mat-form-field></td>
+                          <td>          <mat-form-field class="example-full-width" appearance="fill" color="accent"><mat-label>Marks Out Of</mat-label>
+                            <input type="number" matInput placeholder="Marks Out Of"  (keypress)="numberOnly($event)" formControlName="moo1"[(ngModel)]="ed.moo1" required >
+                            <mat-error *ngIf="hasError('moo1', 'required')"> required</mat-error>
+                          </mat-form-field></td>
+                          <td> <mat-form-field class="example-full-width" appearance="fill" color="accent"><mat-label>Percentage</mat-label>
+                            <input matInput  placeholder="Percentage Ex.70"  (keypress)="numberOnly($event)" formControlName="percentage1" [(ngModel)]="ed.percentage1" required >
+                            <mat-error *ngIf="hasError('percentage1', 'required')"> required</mat-error>
+                          </mat-form-field> </td>
+                          <td><mat-form-field class="example-full-width" appearance="fill" color="accent"><mat-label>Seat No</mat-label>
+                            <input type="text"  matInput placeholder="Seat No" formControlName="seatn1" [(ngModel)]="ed.seatn1" required >
+                            <mat-error *ngIf="hasError('seatn1', 'required')"> required</mat-error>
+                          </mat-form-field></td>
+                        </tr>
+                      </table>
+  
+                      </div>                
+
+                                                      
+                            
+                            
+
+             <mat-divider></mat-divider>
+            <br>
+            <h4>Graduation</h4>
+            <h3>SEM1/SEM3/SEM5</h3>
+                <div *ngFor="let ed1 of student.educations1; let i=index">
+                  <table class="example-full-width" cellspacing="0">
+                    <tr>
+                      <td> <mat-form-field class="example-full-width" appearance="fill" color="accent"><mat-label>Semester</mat-label>
+                        <mat-select matInput placeholder="1st Term Semester" formControlName="sem1" [(ngModel)]="ed1.sem1" required >
+                          <mat-option value="SEM1">SEM1</mat-option>
+                          <mat-option value="SEM2">SEM2</mat-option>
+                          <mat-option value="SEM3">SEM2</mat-option>
+                        </mat-select>
+                        <mat-error *ngIf="hasError('sem1', 'required')"> required</mat-error>
+                      </mat-form-field></td>
+                      <td>   <mat-form-field class="example-full-width" appearance="fill" color="accent"><mat-label>Board/University</mat-label>
+                        <input type="text" matInput placeholder="Board/University" formControlName="board2" [(ngModel)]="ed1.board2" required >
+                        <mat-error *ngIf="hasError('board2', 'required')"> required</mat-error>
+                      </mat-form-field></td>
+                      <td> <mat-form-field class="example-full-width" appearance="fill" color="accent"><mat-label>School/College</mat-label>
+                        <input type="text" matInput placeholder="School/College" formControlName="sc2" required [(ngModel)]="ed1.sc2">
+                        <mat-error *ngIf="hasError('sc2', 'required')"> required</mat-error>
+                      </mat-form-field></td>
+                    </tr>
+                    <tr>
+                      <td> <mat-form-field class="example-full-width" appearance="fill" color="accent"><mat-label>Month of Passing</mat-label>
+                        <input type="month" matInput placeholder="Month of Passing" formControlName="mp2" required [(ngModel)]="ed1.mp2">
+                        <mat-error *ngIf="hasError('mp2', 'required')"> required</mat-error>
+                      </mat-form-field></td>
+                      <td>   <mat-form-field class="example-full-width" appearance="fill" color="accent"><mat-label>Percentage/SGPA</mat-label>
+                        <input matInput type="text" placeholder="Percentage/SGPA" formControlName="percentage2" required [(ngModel)]="ed1.percentage2" >
+                        <mat-error *ngIf="hasError('percentage2', 'required')"> required</mat-error>
+                      </mat-form-field></td>
+                      <td>      <mat-form-field class="example-full-width" appearance="fill" color="accent"><mat-label>Grade</mat-label>
+                        <input matInput type="text" placeholder="Grade" formControlName="grade" [(ngModel)]="ed1.grade" required >
+                        <mat-error *ngIf="hasError('grade', 'required')"> required</mat-error>
+                      </mat-form-field></td>
+                      
+                    </tr>
+                    
+                  </table>
+                   
+     
+
+             
+
+                    <mat-divider></mat-divider>
+                    <br>
+                    <h3>SEM2/SEM4/SEM6</h3>
+
+
+
+                    <table class="example-full-width" cellspacing="0">
+                      <tr>
+                        <td> <mat-form-field class="example-full-width" appearance="fill" color="accent"><mat-label>Semester</mat-label>
+                          <mat-select matInput placeholder="1st Term Semester" formControlName="sem2" [(ngModel)]="ed1.sem2" required >
+                            <mat-option value="SEM1">SEM1</mat-option>
+                            <mat-option value="SEM2">SEM2</mat-option>
+                            <mat-option value="SEM3">SEM2</mat-option>
+                          </mat-select>
+                          <mat-error *ngIf="hasError('sem2', 'required')"> required</mat-error>
+                        </mat-form-field></td>
+                        <td>   <mat-form-field class="example-full-width" appearance="fill" color="accent"><mat-label>Board/University</mat-label>
+                          <input type="text" matInput placeholder="Board/University" formControlName="board3" [(ngModel)]="ed1.board3" required >
+                          <mat-error *ngIf="hasError('board3', 'required')"> required</mat-error>
+                        </mat-form-field></td>
+                        <td> <mat-form-field class="example-full-width" appearance="fill" color="accent"><mat-label>School/College</mat-label>
+                          <input type="text" matInput placeholder="School/College" formControlName="sc3" [(ngModel)]="ed1.sc3" required >
+                          <mat-error *ngIf="hasError('sc3', 'required')"> required</mat-error>
+                        </mat-form-field></td>
+                      </tr>
+                      <tr>
+                        <td> <mat-form-field class="example-full-width" appearance="fill" color="accent"><mat-label>Month of Passing</mat-label>
+                          <input type="month" matInput placeholder="Month of Passing" formControlName="mp3" [(ngModel)]="ed1.mp3" required >
+                          <mat-error *ngIf="hasError('mp3', 'required')"> required</mat-error>
+                        </mat-form-field></td>
+                        <td>   <mat-form-field class="example-full-width" appearance="fill" color="accent"><mat-label>Percentage/SGPA</mat-label>
+                          <input matInput type="text" placeholder="Percentage/SGPA" formControlName="percentage3" [(ngModel)]="ed1.percentage3" required >
+                          <mat-error *ngIf="hasError('percentage3', 'required')"> required</mat-error>
+                        </mat-form-field></td>
+                        <td>      <mat-form-field class="example-full-width" appearance="fill" color="accent"><mat-label>Grade</mat-label>
+                          <input matInput type="text" placeholder="Grade" formControlName="grade1" [(ngModel)]="ed1.grade1" required >
+                          <mat-error *ngIf="hasError('grade1', 'required')"> required</mat-error>
+                        </mat-form-field></td>
+                      </tr>
+                      
+                    </table>
+                     
+</div>
+
+
+                </mat-card-content>
+
+                <mat-card-actions align="end">
+                  <button  mat-stroked-button color="accent" (click)="prevStep()" style="margin-right: 16px"
+                  [disabled]="selectedIndex== 0">Previous</button>
+                  <button mat-raised-button color="accent"  (click)="nextStep()" [disabled]="">Next</button>
+                </mat-card-actions>
+                
+ 
+              </mat-card>
+            </section>
+
+         </mat-tab>
+
+
+                 <!-- Address -->
+                  <mat-tab>
+                  <ng-template mat-tab-label>
+                    <div>
+                   <mat-icon fontSet="material-icons-outlined">room</mat-icon><br>
+                    <span>Address</span></div>
+                  </ng-template>
+
+
+                  <section>
+                    <mat-card>
+                      
+                      <mat-card-content>
+                          <!-- <h3>Address Details</h3> -->
+                          <div class="column">
+                            <h4 >Permanent Address</h4>
+                            <mat-form-field class="example-full-width"  appearance="fill" color="accent"><mat-label>Address Line 1</mat-label>
+                              <input matInput type="text" placeholder="Flat No/Aparment No" required formControlName="room" [(ngModel)]="student.room" >
+                              <mat-error *ngIf="hasError('room', 'required')"> required</mat-error>
+                          </mat-form-field>
+          
+                          <mat-form-field class="example-full-width" appearance="fill" color="accent"><mat-label>Address Line 2</mat-label>
+                            <input matInput type="text" placeholder="Landmark/Premises" [readonly] ="isChecked"  required 
+                            formControlName="country"  [(ngModel)]="student.country" >
+                            <mat-error *ngIf="hasError('country', 'required')"> required</mat-error>
+                        </mat-form-field>
+                            
+                          
+                            <table class="example-full-width" >
+                             <tr>
+                              <td> <mat-form-field appearance="fill" class="example-full-width" color="accent"><mat-label>State</mat-label>
+                                  <select matNativeControl  required formControlName="state" [(ngModel)]="student.state"  name="state"(change)="onSelect($event.target.value)" >
+                                        <option value="0">--Select--</option>
+                                    <option *ngFor="let state of states" value= {{state.name}}>{{state.name}}</option>
+                                      </select>
+                                  <mat-error *ngIf="hasError('state', 'required')"> required</mat-error>
+                                </mat-form-field></td>
+                              <td><mat-form-field appearance="fill" class="example-full-width" color="accent" ><mat-label>District</mat-label>
+                                  <mat-select required formControlName="district"  (change)="onSelect($event.target.value)" [(ngModel)]="student.district">
+                                    <mat-option value="0">--Select--</mat-option>
+                                    <mat-option *ngFor="let district of districts"  value={{district.name}}>{{district.name}}</mat-option>
+                                  </mat-select>
+                                  <mat-error *ngIf="hasError('district', 'required')"> required</mat-error>
+                                </mat-form-field></td>
+                             </tr>
+                             <tr>
+                                <td>  <mat-form-field appearance="fill" class="example-full-width" color="accent"><mat-label>City/Town</mat-label>
+                                  <input matInput type="text" placeholder="City/Town" name="city" formControlName="city" [(ngModel)]="student.city" required>
+                                  <mat-error *ngIf="hasError('city', 'required')"> required</mat-error>
+                                </mat-form-field></td>
+                                  <td><mat-form-field class="example-full-width" appearance="fill" color="accent"><mat-label>Pin Code</mat-label>
+                                      <input matInput type="tel" name="pin"  (keypress)="numberOnly($event)" placeholder="Pin Code" formControlName="pincode" minLength="6" maxLength="6" [(ngModel)]="student.pincode" required>
+                                      <mat-error *ngIf="hasError('pincode', 'required')">required</mat-error>
+                                      <mat-error *ngIf="hasError('pincode', 'minlength')">at least 6</mat-error>
+                                      <mat-error *ngIf="hasError('pincode', 'maxlength')">up to 6</mat-error>
+                                    </mat-form-field>
+                                </td>
+                             </tr>
+                            </table>
+                          </div>
+                          <div class="column">
+                          <h4>Correspondance Address</h4>
+                          <mat-form-field class="example-full-width" appearance="fill" color="accent"><mat-label>Address Line 1</mat-label>
+                            <input matInput type="text" placeholder="Flat No/Aparment No" [readonly] ="isChecked"  required formControlName="room1" [(ngModel)]="student.room1" >
+                            <mat-error *ngIf="hasError('room1', 'required')"> required</mat-error>
+                        </mat-form-field>
+
+                        <mat-form-field class="example-full-width" appearance="fill" color="accent"><mat-label>Address Line 2</mat-label>
+                          <input matInput type="text" placeholder="Landmark/Premises" [readonly] ="isChecked"  required 
+                          formControlName="country1"  [(ngModel)]="student.country1" >
+                          <mat-error *ngIf="hasError('country1', 'required')"> required</mat-error>
+                      </mat-form-field>
+  
+                        
+
+                        <table class="example-full-width" cellspacing="0">
+                          <tr>
+                            <td>  <mat-form-field class="example-full-width" appearance="fill" color="accent"><mat-label>State</mat-label>
+                              <select matNativeControl  required formControlName="state1"   [(ngModel)]="student.state1" name="state1"(change)="onSelect1($event.target.value)" >
+                                    <option value="0">--Select--</option>
+                                <option *ngFor="let state of states"  value= {{state.name}}>{{state.name}}</option>
+                                  </select>
+                              <mat-error *ngIf="hasError('state1', 'required')"> required</mat-error>
+                            </mat-form-field></td>
+                            <td>  <mat-form-field class="example-full-width"  appearance="fill" color="accent"><mat-label>District</mat-label>
+                              <mat-select required formControlName="district1"  [(ngModel)]="student.district1" (change)="onSelect1($event.target.value)">
+                                <mat-option value="0">--Select--</mat-option>
+                                <mat-option *ngFor="let district of districts"  value={{district.name}}>{{district.name}}</mat-option>
+                              </mat-select>
+                              <mat-error *ngIf="hasError('district1', 'required')"> required</mat-error>
+                            </mat-form-field></td>
+                          </tr>
+                          <tr>
+                            <td>   <mat-form-field  class="example-full-width" appearance="fill" color="accent"><mat-label>City/Town</mat-label>
+                              <input matInput type="text" placeholder="City/Town" [readonly] ="isChecked" [(ngModel)]="student.city1"  name="city1" formControlName="city1" required>
+                              <mat-error *ngIf="hasError('city1', 'required')"> required</mat-error>
+                            </mat-form-field></td>
+                            <td>  <mat-form-field class="example-full-width" appearance="fill" color="accent"><mat-label>Pin Code</mat-label>
+                              <input matInput type="tel" name="pin" placeholder="Pin Code" [readonly] ="isChecked"  (keypress)="numberOnly($event)" formControlName="pincode1" [(ngModel)]="student.pincode1" minLength="6" maxLength="6" required>
+                              <mat-error *ngIf="hasError('pincode1', 'required')">required</mat-error>
+                              <mat-error *ngIf="hasError('pincode1', 'minlength')">atleast 6</mat-error>
+                              <mat-error *ngIf="hasError('pincode1', 'maxlength')">up to 6</mat-error>
+                            </mat-form-field></td>
+                          </tr>
+                        </table>
+                        <div fxLayout="row" fxLayoutAlign="end">
+                          <input type="checkbox"  [(ngModel)]="isChecked" (change)="checkValue($event)" label="same as above"
+                          [ngModelOptions]="{standalone: true}">
+                          <mat-label for="checkbox"> Same As Correspondance Address
+                          </mat-label>
+                        </div>
+                       
+                        </div>
+                
+                      </mat-card-content>
+                      <mat-card-actions align="end">
+                        <button  mat-stroked-button color="accent" (click)="prevStep()" style="margin-right: 16px"
+                        [disabled]="selectedIndex== 0">Previous</button>
+                        <button mat-raised-button color="accent"  (click)="nextStep()" [disabled]="">Next</button>
+                      </mat-card-actions>
+                   
+                    </mat-card>
+                  </section>
+
+
+                   </mat-tab>
+
+
+
+
+
+
+
+
+  <!-- Document Upload -->
+       <mat-tab>
+        <ng-template mat-tab-label>
+        <div>
+        <mat-icon fontSet="material-icons-outlined">description</mat-icon><br>
+        <span>Document Upload</span>
+        </div>
+        </ng-template>
+        <section >
+          <mat-card>
+           
+            <h3>Document Upload</h3>
+          <mat-hint>Note: Please upload the JPG,JPEG,PDF file upto 1 MB</mat-hint><mat-divider></mat-divider><br>
+          <mat-card-content>
+           
+          <div>
+          <label class="file">Aadhar Card </label><br>
+          <input type="file" id="file" (change)="fileChangeEvent2($event)" required formControlName="aadhar1" required>
+          </div><mat-divider></mat-divider>
+          <div><br>
+          <label class="file">Ration Card</label><br>
+          <input type="file" (change)="fileChangeEvent2($event)" required formControlName="rationcard">
+          </div><mat-divider></mat-divider>
+          <label class="file">Semester Marksheets</label><br>
+          <div><br>
+          SEM1/SEM3/SEM5<br><input type="file" id="file" formControlName="firstterm"  (change)="fileChangeEvent2($event)" required>
+          </div>
+          <div><br>
+          SEM2/SEM4/SEM5<br><input type="file" id="file" formControlName="secondterm"  (change)="fileChangeEvent2($event)" required ><br>
+          </div>
+          <mat-divider></mat-divider>
+         
+          </mat-card-content>
+          <mat-card-actions align="end">
+          <button mat-stroked-button color="accent" type="submit" (click)="upload()" >Upload</button>
+          <button  mat-stroked-button color="accent" (click)="prevStep()" style="margin-right: 16px">Previous</button>
+          <button  mat-raised-button color="accent" [disabled]="" (click)="nextStep()">Save & Proceed</button>
+          </mat-card-actions>
+      
+          </mat-card>
+          </section>
+        </mat-tab>
+
+    <!-- Verifucation -->
+                 <mat-tab>
+                  <ng-template mat-tab-label>
+                    <div>
+                    <mat-icon fontSet="material-icons-outlined">check_circle_outline</mat-icon><br>
+                   <span>Verification</span>
+                  </div>
+                  </ng-template>
+                  <section>
+                
+                    <mat-card >
+
+                        <mat-card-content class="section">
+                          <h3>Student Photo and Signature Details</h3>
+                          <mat-divider></mat-divider><br>
+                          <div class="container">
+                          <mat-card class="box1">
+                            <label class="file">Photo Details</label>
+                          <br><br>
+                          <input type="file" (change)="fileChangeEvent($event)" required class="fileInputProfile" formControlName="photo">
+                            <div class="fileInputProfileWrap">
+                            <div class="img-space">
+                            <ng-container>
+                            <img [src]="cardImage1Base64" />
+                            </ng-container>
+                          </div>
+                            </div>
+                           <br>
+                            <p> Note:Please select valid image file(JPEG) upto size 100kb</p>
+                            <p>{{imageError1}}</p>
+                            <br>
+
+
+                          <mat-card-actions align="end">
+                            <button  mat-button color="accent"  (click)="removeImage()">Clear</button>
+                          </mat-card-actions>
+                          </mat-card>
+
+                          <mat-card class="box1">
+                          <label class="file">Signature Details</label>
+                          <br><br>
+                                <input type="file" (change)="fileChangeEvent1($event)" required class="fileInputProfile" formControlName="sign">
+                                <div class="fileInputProfileWrap">
+                                <div class="img-space">
+                                <ng-container >
+                                <img [src]="cardSignBase64"/>
+                                </ng-container>
+                                </div>
+
+                                </div>
+                                <br>
+                                <p>Note:Please select Valid image file(JPEG) upto size 100kb</p>
+                                <p>{{signError}}</p>
+                                <mat-card-actions align="end">
+                                 <button  mat-button color="accent"  (click)="removeSign()">Clear</button>
+                                </mat-card-actions>
+                              </mat-card>
+                            </div>
+                                   <br> <mat-divider></mat-divider><br>
+                                 <h4>Declaration by Student and Parents/Gaurdian</h4>
+                                  <mat-divider></mat-divider>
+                                  <br>
+                                  <div>
+                                    <mat-label class="check2">
+                                      <input  type="checkbox" required formControlName="check">
+                                    </mat-label> I accept above terms & conditions :<br><br>
+                                    <p>
+                                      We hereby declare that, we have read the rules and eligibility criteria related to admission and the information filled in this form
+                                      is accurate and true to the best of our knowledge.We will responsible for any discrepancy, arising out of the wrong information
+                                      furnished and signed by us and we undertake that, in the absence of any document the final admission will not be granted and/or
+                                      admission will stand cancelled,under such circumstances will have no claim against the college.
+                                    </p>
+                                   
+                                  </div>
+
+                        </mat-card-content>
+
+                        <mat-card-actions align="end">
+                          <button  mat-stroked-button color="accent" (click)="prevStep()" style="margin-right: 16px"
+                          [disabled]="selectedIndex== 0">Previous</button>
+                          <button  mat-raised-button color="accent" (click)="generatePdf()">PDF</button>
+                          <button  mat-raised-button color="accent"class="btn btn-primary" [disabled]="!studentForm.valid"  type="submit" (click)="onSubmitApplication()" >Submit</button>
+                        </mat-card-actions>
+                      </mat-card>
+                
+                  </section>
+            </mat-tab>
+
+
+          
+          <!-- <mat-tab >
+            <ng-template mat-tab-label >
+              <div >
+                <mat-icon fontSet="material-icons-outlined">payment</mat-icon>
+              <br>
+              <span>Payment</span>
+              </div>
+            </ng-template>
+
+           
+            </mat-tab> -->
+           
+            
+  </form>
+
+                  </mat-tab-group>
+               
+                <!-- </form> -->
+
+               
+              </div>
+
+
+
+
+
+
+                

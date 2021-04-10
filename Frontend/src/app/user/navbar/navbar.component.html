@@ -1,0 +1,8 @@
+<mat-toolbar *ngIf="!userService.isLoggedIn()" class="main-toolbar mat-toolbar" role="toolbar">
+    <mat-icon fontSet="material-icons-outlined">account_balance</mat-icon>
+    <h1>College Name</h1>
+    <span class="menu-spacer"></span>
+    
+    <a mat-button mat-raised-button routerLink="/institute-login"  routerLinkActive=router-link-active>Institute Login</a>
+</mat-toolbar>
+

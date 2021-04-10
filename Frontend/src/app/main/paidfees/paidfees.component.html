@@ -1,0 +1,15 @@
+
+
+
+<select>
+    <option value="" class="text-primary font-weight-bolder"> --- Select Category --- </option> 
+    <option  *ngFor="let user of users" [value]="user.email"> {{user.email}} </option>
+</select>
+
+<br>
+
+<select>
+    <option value="" class="text-primary font-weight-bolder"> --- Select Category --- </option> 
+    <option  *ngFor="let user of users" [value]="user.mobileNo"> {{user.mobileNo}} </option>
+
+</select>

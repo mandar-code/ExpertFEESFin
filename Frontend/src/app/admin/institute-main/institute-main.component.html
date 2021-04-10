@@ -1,0 +1,117 @@
+
+
+
+
+
+<div>
+
+  <mat-toolbar>
+    <mat-icon fontSet="material-icons-outlined">account_balance</mat-icon>
+    <h4 *ngIf="Admindetails">{{Admindetails.collegeName}}</h4>
+
+    <span class="menu-spacer"></span>
+    <a mat-button mat-raised-button (click)="logout()"  routerLinkActive=router-link-active>Log Out</a>
+</mat-toolbar>
+
+  <mat-card>
+    <select>
+      <option value="" class="text-primary font-weight-bolder"> --- Select Email--- </option> 
+      <option  *ngFor="let user of users" [value]="user.email"> {{user.email}} </option>
+    </select>
+    
+    <br>
+    
+    <select>
+      <option value="" class="text-primary font-weight-bolder"> --- Select Mobile No --- </option> 
+      <option  *ngFor="let user of users" [value]="user.mobileNo"> {{user.mobileNo}} </option>
+    </select>
+    <mat-card-title align="center">
+      <h3>Student Data</h3>
+    </mat-card-title>
+    <mat-card-content>
+    <div fxLayout="row">
+      <mat-form-field color="accent" appearance="outline">
+        <mat-label>Department</mat-label>
+        <mat-select>
+          <mat-option value="computer science">Computer Science</mat-option>
+          <mat-option value="It">I.T</mat-option>
+          <mat-option value="Bio">Bio</mat-option>
+          <mat-option value="Physics">Physics</mat-option>
+        </mat-select>
+        <mat-hint>Select college department</mat-hint>
+      </mat-form-field>
+
+      <mat-form-field color="accent" appearance="outline">
+        <mat-label>Course Year</mat-label>
+        <mat-select>
+          <mat-option value="First Year">First Year</mat-option>
+          <mat-option value="Second Year">Second Year </mat-option>
+          <mat-option value="Third Year">Third Year</mat-option>
+            </mat-select>
+        <mat-hint>Select course year</mat-hint>
+      </mat-form-field>
+      <mat-form-field color="accent" appearance="outline">
+        <mat-label>Student List</mat-label>
+        <mat-select>
+          <mat-option>Student List</mat-option>
+         </mat-select>
+        <mat-hint>Select student</mat-hint>
+      </mat-form-field>
+    </div>
+    <div fxLayout="row">
+      <mat-form-field color="accent" appearance="outline"><mat-label>First Name</mat-label>
+        <input matInput  required type="text">
+        </mat-form-field>
+        <mat-form-field color="accent" appearance="outline"><mat-label>Middle Name</mat-label>
+        <input matInput  required type="text">
+        </mat-form-field>
+        <mat-form-field color="accent" appearance="outline"><mat-label>Last Name</mat-label>
+        <input matInput  required type="text">
+        </mat-form-field>
+        <mat-form-field color="accent" appearance="outline"><mat-label>Date of Birth</mat-label>
+          <input matInput [matDatepicker]="picker">
+        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
+        </mat-form-field>
+    </div>
+    <div fxLayout="row">
+      <mat-form-field color="accent" appearance="outline"><mat-label>Mother's Name</mat-label>
+        <input matInput  required type="text">
+      </mat-form-field>
+      <mat-form-field color="accent" appearance="outline"><mat-label>Gender</mat-label>
+        <input matInput  required type="text">
+      </mat-form-field>
+      
+    <mat-form-field color="accent" appearance="outline"><mat-label>Email ID</mat-label>
+      <input  matInput  required type="email">
+    </mat-form-field>
+
+    <mat-form-field color="accent" appearance="outline"><mat-label>Mobile No</mat-label>
+      <input matInput  required type="tel">
+    </mat-form-field>
+    </div>
+    <div fxLayout="row">
+      <mat-form-field color="accent" appearance="outline"><mat-label>Parent's Mobile No</mat-label>
+        <input matInput  required type="text">
+      </mat-form-field>
+      
+      
+      <mat-form-field color="accent" appearance="outline"><mat-label>Address</mat-label>
+            <textarea matInput  required type="tel"></textarea>
+      </mat-form-field>
+    </div>
+  
+    
+   
+    
+    </mat-card-content >
+    <mat-card-actions align="center">
+      <button mat-stroked-button color="accent">Delete</button>
+      <button mat-raised-button color="accent">Update</button>
+     
+    </mat-card-actions>
+    
+  
+    </mat-card>
+    
+</div>
